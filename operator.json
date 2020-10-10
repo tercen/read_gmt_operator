@@ -1,9 +1,9 @@
 {
-  "name": "Median",
-  "description": "Return the medium value of a cell",
-  "tags": ["basic statistics"],
+  "name": "Read GMT operator",
+  "description": "Reads a GMT file containing a gene set annotation",
+  "tags": ["file conversion"],
   "authors": ["tercen"],
-  "urls": ["https://github.com/tercen/template_operator"],
+  "urls": ["https://github.com/tercen/read_gmt_operator"],
   "properties": []
 }
 
