@@ -17,7 +17,6 @@ doc_to_data = function(df){
     set_genes = unlist(dat$genesets)
   ) %>% 
     mutate(set_genes = strsplit(as.character(set_genes), ",")) %>%
-    mutate(set_genes = set_genes[set_genes != ""]) %>% 
     unnest(set_genes) %>%
     mutate(.ci= rep_len(df$.ci[1], nrow(.)))
   
