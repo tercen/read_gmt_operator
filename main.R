@@ -9,14 +9,15 @@ doc_to_data = function(df){
   on.exit(unlink(filename))
   
   dat <- GSA::GSA.read.gmt(filename)
-  dat$genesets <- lapply(dat$genesets, paste, collapse = "")
+  dat$genesets <- lapply(dat$genesets, paste, collapse = ",")
   
   df_out <- data.frame(
     set_name = dat$geneset.names,
     set_description = dat$geneset.descriptions,
     set_genes = unlist(dat$genesets)
   ) %>% 
-    mutate(set_genes = strsplit(as.character(set_genes), ",")) %>% 
+    mutate(set_genes = strsplit(as.character(set_genes), ",")) %>%
+    mutate(set_genes = set_genes[set_genes != ""]) %>% 
     unnest(set_genes) %>%
     mutate(.ci= rep_len(df$.ci[1], nrow(.)))
   
