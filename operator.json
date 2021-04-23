@@ -1,7 +1,7 @@
 {
-  "name": "Read GMT operator",
-  "description": "Reads a GMT file containing a gene set annotation",
-  "tags": ["file conversion"],
+  "name": "GMT",
+  "description": "Import a Gene Matrix Transposed file (.gmt)",
+  "tags": ["file conversion", "Import"],
   "authors": ["tercen"],
   "urls": ["https://github.com/tercen/read_gmt_operator"],
   "properties": []
