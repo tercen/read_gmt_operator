@@ -1,0 +1,14 @@
+{
+  "kind": "OperatorUnitTest",
+  "name": "read gmt",
+  "namespace": "ds14",
+  "inputFileUris": ["example_REAC_subset.gmt"],
+  "inputDataUri": "input.csv",
+  "outputDataUri": ["table1.csv","table2.csv"],
+  "columns": ["documentId"],
+  "rows": [],
+  "colors": [],
+  "labels": [],
+  "yAxis": "",
+  "xAxis": ""
+}

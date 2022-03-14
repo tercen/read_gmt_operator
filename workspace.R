@@ -3,6 +3,12 @@ library(dplyr)
 library(tidyr)
 library(GSA)
 
+### GENERATION OF EXAMPLE DATA
+#fname_GMT <- system.file("extdata", "hsapiens_REAC_subset.gmt", package = "ActivePathways")
+#gmt <- read.GMT(fname_GMT)
+#write.GMT(gmt,filename = "./tests/example_REAC_subset.gmt")
+###
+
 options("tercen.workflowId" = "a77770c3923fad0ca99b77fa8905471d")
 options("tercen.stepId"     = "4d56d36e-80ee-4554-ade4-5d713bf2fac5")
 
@@ -31,7 +37,7 @@ ctx = tercenCtx()
 if (!any(ctx$cnames == "documentId")) stop("Column factor documentId is required") 
 
 df <- ctx$cselect() %>% 
-  mutate(.ci= 1:nrow(.)-1) %>%
+  mutate(.ci= 1:nrow(.)-1L) %>%
   split(.$.ci) %>%
   lapply(doc_to_data) %>%
   bind_rows() %>%
