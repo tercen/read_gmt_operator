@@ -12,6 +12,7 @@ Input projection|.
 
 Output relations|.
 ---|---
+`set_id`        | gene set numeric identifier
 `set_name`        | character, gene set name
 `set_description`        | character, gene set description
 `set_genes`        | character, gene name

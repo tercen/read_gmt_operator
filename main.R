@@ -1,36 +1,43 @@
-library(tercen)
-library(dplyr)
-library(tidyr)
-library(GSA)
-
-doc_to_data = function(df){
-  filename = tempfile()
-  writeBin(ctx$client$fileService$download(df$documentId[1]), filename)
-  on.exit(unlink(filename))
-  
-  dat <- GSA::GSA.read.gmt(filename)
-  dat$genesets <- lapply(dat$genesets, paste, collapse = ",")
-  
-  df_out <- data.frame(
-    set_name = dat$geneset.names,
-    set_description = dat$geneset.descriptions,
-    set_genes = unlist(dat$genesets)
-  ) %>% 
-    mutate(set_genes = strsplit(as.character(set_genes), ",")) %>%
-    unnest(set_genes) %>%
-    mutate(.ci= rep_len(df$.ci[1], nrow(.)))
-  
-  return(df_out)
-}
+suppressPackageStartupMessages({
+  library(tercen)
+  library(dplyr)
+  library(tidyr)
+  library(GSA)
+})
 
 ctx = tercenCtx()
 
-if (!any(ctx$cnames == "documentId")) stop("Column factor documentId is required") 
+if(!any(ctx$cnames == "documentId")) stop("Column factor documentId is required") 
 
-df <- ctx$cselect() %>% 
-  mutate(.ci= 1:nrow(.)-1L) %>%
-  split(.$.ci) %>%
-  lapply(doc_to_data) %>%
-  bind_rows() %>%
+docId <- ctx$cselect()["documentId"][[1]]
+
+filename = tempfile()
+writeBin(ctx$client$fileService$download(docId), filename)
+on.exit(unlink(filename))
+
+dat <- GSA::GSA.read.gmt(filename)
+
+table_1 <- dat$genesets %>%
+  purrr::map(~ as_tibble(.)) %>%
+  bind_rows(.id = "set_id") %>%
+  mutate(set_id = as.double(set_id)) %>%
+  rename(set_genes = value) %>%
+  filter(set_genes != "") %>% 
   ctx$addNamespace() %>%
-  ctx$save()
+  as_relation()
+
+table_2 <- tibble(
+  set_id = seq_along(dat$geneset.names),
+  set_name = dat$geneset.names,
+  set_description = dat$geneset.descriptions
+) %>% 
+  mutate(set_id = as.double(set_id)) %>%
+  ctx$addNamespace() %>%
+  as_relation()
+
+id_col <- paste0(ctx$namespace, ".set_id")
+
+table_1 %>%
+  left_join_relation(table_2, id_col, id_col) %>%
+  as_join_operator(list(), list()) %>%
+  save_relation(ctx)

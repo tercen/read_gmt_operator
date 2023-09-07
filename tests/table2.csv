@@ -1,2 +1,3 @@
-"documentId"
-"example_REAC_subset.gmt"
+"ds3.set_id","ds3.set_name","ds3.set_description"
+1.0,"REAC:1630316","Glycosaminoglycan metabolism"
+2.0,"REAC:5633007","Regulation of TP53 Activity"

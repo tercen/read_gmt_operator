@@ -1,7 +1,7 @@
 {
   "kind": "OperatorUnitTest",
   "name": "read gmt",
-  "namespace": "ds14",
+  "namespace": "ds3",
   "inputFileUris": ["example_REAC_subset.gmt"],
   "inputDataUri": "input.csv",
   "outputDataUri": ["table1.csv","table2.csv"],
