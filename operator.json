@@ -1,7 +1,7 @@
 {
   "name": "GMT",
-  "description": "Import a Gene Matrix Transposed file (.gmt)",
-  "tags": ["file conversion", "Import"],
+  "description": "Import a Gene Matrix Transposed (GMT) file containing gene sets.",
+  "tags": ["import", "omics", "annotation"],
   "authors": ["tercen"],
   "urls": ["https://github.com/tercen/read_gmt_operator"],
   "properties": []
