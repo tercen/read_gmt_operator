@@ -1,6 +1,6 @@
 {
   "name": "GMT",
-  "description": "Import a Gene Matrix Transposed (GMT) file containing gene sets.",
+  "description": "Imports a Gene Matrix Transposed (GMT) file containing gene sets.",
   "tags": [
     "import",
     "omics"
